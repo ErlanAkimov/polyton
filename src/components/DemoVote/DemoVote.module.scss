@@ -46,12 +46,19 @@
     .line {
         position: absolute;
         top: 50%;
-        left: 50%;
         width: 3px;
         height: 112%;
         border-radius: 100px;
-        transform: translateY(-50%);
+        transform: translate(-50%, -50%);
         background-color: white;
         box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.2);
+        transition: left .5s;
     }
+}
+
+.pickerTitle {
+    color: rgba(255, 255, 255, 0.781);
+    font-size: 12px;
+    font-weight: 400;
+    padding-left: px;
 }

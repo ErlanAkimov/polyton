@@ -18,7 +18,9 @@ const Homepage: React.FC = () => {
 
     useEffect(() => {
         if (!events.length) {
-            api.get("/getEvents").then((res) => dispatch(setEvents(res.data.events)));
+            api.get(`/getEvents?userId=${window.Telegram.WebApp.initDataUnsafe.user.id}`).then((res) => {
+                dispatch(setEvents(res.data));
+            });
         }
     }, []);
 
@@ -42,9 +44,7 @@ const Homepage: React.FC = () => {
                 </div>
             )}
 
-            {
-                tab === 'event' && <CreateEvent />
-            }
+            {tab === "event" && <CreateEvent />}
         </div>
     );
 };

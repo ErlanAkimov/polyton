@@ -3,91 +3,84 @@ import styles from "./VotePicker.module.scss";
 import { IEvent } from "../../types/types";
 import { fromNano } from "@ton/ton";
 import DemoVote from "../DemoVote/DemoVote";
+import { useAppSelector } from "../../store/store";
 
 interface Props {
     event: IEvent;
-    onClick: (side?: number) => void;
-    picked?: number;
+    onClick: (side: "v1" | "v2") => void;
+    amount?: string;
+    picked?: "v1" | "v2";
+    className?: string
 }
 
-const VotePicker: React.FC<Props> = ({ event, onClick, picked }) => {
+const VotePicker: React.FC<Props> = ({ className, event, amount, onClick, picked = null }) => {
     const [w1, sw1] = useState<string>("100%");
     const [w2, sw2] = useState<string>("100%");
 
+    const [x1, sx1] = useState<string | number>();
+    const [x2, sx2] = useState<string | number>();
+
+    const [c1, sc1] = useState<number>(Number(fromNano(event.votes.v1.collected)));
+    const [c2, sc2] = useState<number>(Number(fromNano(event.votes.v1.collected)));
+
     useEffect(() => {
-        function calculateWidths() {
-            const collected1 = Number(event.votes.v1.collected);
-            const collected2 = Number(event.votes.v2.collected);
-            const total = collected1 + collected2;
+        const newAmount = Number(amount ? amount : 0);
+        const total =
+            Number(fromNano(event.votes.v1.collected)) + Number(fromNano(event.votes.v2.collected)) + newAmount;
+        const v1 = Number(fromNano(event.votes.v1.collected)) + (picked === "v1" ? newAmount : 0);
+        const v2 = Number(fromNano(event.votes.v2.collected)) + (picked === "v2" ? newAmount : 0);
 
-            const rate1 = collected1 / total;
-            const rate2 = collected2 / total;
+        sx1((total / v1).toFixed(2));
+        sx2((total / v2).toFixed(2));
 
-            sw1(`${(rate1 * 100).toString()}%`);
-            sw2(`${(rate2 * 100).toString()}%`);
-        }
+        sc1(v1);
+        sc2(v2);
 
-        calculateWidths();
-    }, []);
+        
+        if (!event.myDemoVote) return;
+        sw1(`${((v1 / total) * 100).toString()}%`);
+        sw2(`${((v2 / total) * 100).toString()}%`);
+    }, [amount, event, picked]);
 
     return (
-        <>
+        <div className={className}>
             <div className={styles.voteWrapper}>
                 <div className={styles.voteVariant} style={{ width: w1 }}>
                     <button
-                        onClick={() => onClick(0)}
+                        onClick={() => onClick("v1")}
                         className={styles.voteButton}
                         style={{
-                            opacity: picked === undefined || picked === 0 ? 1 : 0.4,
+                            opacity: picked === "v2" ? 0.4 : 1,
                             backgroundColor: "var(--color-vote-green)",
                         }}
                     >
-                        {event.votes.v1.title}{" "}
-                        {Number(event.votes.v1.collected) > 0 && (
-                            <span>
-                                x
-                                {(
-                                    Number(fromNano(event.votes.v2.collected)) /
-                                        Number(fromNano(event.votes.v1.collected)) +
-                                    1
-                                ).toFixed(2)}
-                            </span>
-                        )}
+                        {event.votes.v1.title} {Number(event.votes.v1.collected) > 0 && event.myDemoVote && <span>x{x1}</span>}
                     </button>
                     <p className={styles.poolsize}>
-                        пул <span>{fromNano(event.votes.v1.collected)} </span> TON
+                        
+                        <span>{event.myDemoVote ? c1 : "?"}</span> TON
                     </p>
                 </div>
                 <span className={styles.vs}>vs</span>
                 <div className={styles.voteVariant} style={{ width: w2 }}>
                     <button
                         style={{
-                            opacity: picked === undefined || picked === 1 ? 1 : 0.4,
+                            opacity: picked === "v1" ? 0.4 : 1,
                             backgroundColor: "var(--color-vote-red)",
                         }}
-                        onClick={() => onClick(1)}
+                        onClick={() => onClick("v2")}
                         className={styles.voteButton}
                     >
-                        {event.votes.v2.title}{" "}
-                        {Number(event.votes.v1.collected) > 0 && (
-                            <span>
-                                x
-                                {(
-                                    Number(fromNano(event.votes.v1.collected)) /
-                                        Number(fromNano(event.votes.v2.collected)) +
-                                    1
-                                ).toFixed(2)}
-                            </span>
-                        )}
+                        {event.votes.v2.title} {Number(event.votes.v1.collected) > 0 && event.myDemoVote && <span>x{x2}</span>}
                     </button>
                     <p className={styles.poolsize}>
-                        пул <span>{fromNano(event.votes.v2.collected)} </span> TON
+                        <span>{event.myDemoVote ? c2 : "?"}</span> TON
                     </p>
                 </div>
             </div>
 
-			{/* <DemoVote event={event} /> */}
-        </>
+            <DemoVote event={event} />
+        </div>
     );
 };
 

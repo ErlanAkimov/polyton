@@ -1,32 +1,62 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Eventpage.module.scss";
 import { IEvent } from "../../types/types";
-import { api } from "../../api";
+import { api, authApi } from "../../api";
 import { useParams } from "react-router-dom";
 import useBackButton from "../../hooks/useBackButton";
 import { IconShare, IconWallet } from "../../components/icons";
 import { motion } from "motion/react";
 import VotePicker from "../../components/VotePicker/VotePicker";
-import useBottomButton from "../../hooks/useBottomButton";
-import { fromNano } from "@ton/ton";
+import { fromNano, toNano } from "@ton/ton";
 import Nft from "../../components/Nft/Nft";
 import FullDescription from "./FullDescription";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { setEvents } from "../../store/slices/AppSlice";
 
 const Eventpage: React.FC = () => {
-    const [event, setEvent] = useState<IEvent | null>(null);
+    useBackButton();
     const { eventId } = useParams();
+    const eventFromRedux = useAppSelector((state) => state.app.events);
+    const [event, setEvent] = useState<IEvent | null>(eventFromRedux?.filter((e) => e.id === eventId)[0] || null);
 
     const [amount, setAmount] = useState<string>("");
-    const [pickedVote, setPickedVote] = useState<number>(0);
+    const [pickedVote, setPickedVote] = useState<"v1" | "v2">("v1");
+    const dispatch = useAppDispatch();
 
-    const handleVote = () => {};
+    const handleVote = () => {
+        const wa = window.Telegram.WebApp;
+        if (!event) {
+            wa.showAlert("Событие не найдено, попробуйте обновить страницу");
+            return;
+        }
+        if (!amount) {
+            wa.showAlert("Введите ссуму для голосования (min 0.5 TON)");
+            return;
+        }
+        authApi
+            .post(`/vote`, {
+                eventId: event?.id,
+                pickedVote,
+                amount,
+            })
+            .then(() => {
+                setEvent((prev) => {
+                    const old = prev!.votes[pickedVote].collected;
 
-    useBackButton();
-    useBottomButton("Создать ордер", handleVote);
+                    const newValue = Number(old) + Number(toNano(amount));
+                    prev!.votes[pickedVote].collected = newValue.toString();
+                    return prev;
+                });
+            });
+    };
 
     const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         const regex = /^\d*\.?\d*$/;
+
+        if (Number(value) > 999999) {
+            return;
+        }
 
         if (regex.test(value)) {
             setAmount(value);
@@ -46,7 +76,12 @@ const Eventpage: React.FC = () => {
 
     useEffect(() => {
         if (!event) {
-            api.get(`/getEvent?eventId=${eventId}`).then((res) => setEvent(res.data.event));
+            api.get(`/getEvent?eventId=${eventId}&userId=${window.Telegram.WebApp.initDataUnsafe.user.id}`).then(
+                (res) => {
+                    dispatch(setEvents({ events: [res.data.event] }));
+                    setEvent(res.data.event);
+                }
+            );
             return;
         }
     }, []);
@@ -57,10 +92,8 @@ const Eventpage: React.FC = () => {
         );
     };
 
-    const handlePickVote = (number?: number) => {
-        if (number !== undefined) {
-            setPickedVote(number);
-        }
+    const handlePickVote = (v: "v1" | "v2") => {
+        setPickedVote(v);
     };
 
     return (
@@ -108,7 +141,7 @@ const Eventpage: React.FC = () => {
 
                     <div className={styles.picker}>
                         <p className={styles.pickerTitle}>Выбери прогноз события</p>
-                        <VotePicker picked={pickedVote} event={event} onClick={handlePickVote} />
+                        <VotePicker amount={amount} picked={pickedVote} event={event} onClick={handlePickVote} />
                     </div>
 
                     {/* <DemoVote event={event} setUnlockVote={setVoteUnlocked} /> */}
@@ -124,8 +157,8 @@ const Eventpage: React.FC = () => {
                                 Ваша потенциальная прибыль составит{" "}
                                 {(
                                     Number(amount) *
-                                    (Number(fromNano(event.votes[pickedVote === 0 ? "v1" : "v2"].collected)) /
-                                        Number(fromNano(event.votes[pickedVote === 0 ? "v2" : "v1"].collected)) +
+                                    (Number(fromNano(event.votes[pickedVote].collected)) /
+                                        Number(fromNano(event.votes[pickedVote].collected)) +
                                         1)
                                 ).toFixed(2)}{" "}
                                 TON, текущие коэффициенты меняются с учетом новых голосов
@@ -162,6 +195,10 @@ const Eventpage: React.FC = () => {
                     </div>
                 </div>
             )}
+
+            <motion.div whileTap={{ scale: 0.95 }} className={styles.voteBtn} onClick={handleVote}>
+                Создать ордер
+            </motion.div>
         </div>
     );
 };

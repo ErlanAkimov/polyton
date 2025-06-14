@@ -18,7 +18,7 @@ export default function useBottomButton(text: string, onClick: () => void) {
         }
 
         return () => {
-            wa.MainButton.offClick();
+            wa.MainButton.offClick(onClick);
             wa.MainButton.hide();
         };
     }, [wallet]);

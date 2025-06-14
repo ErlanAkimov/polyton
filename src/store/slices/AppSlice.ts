@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IEvent } from "../../types/types";
+import { IDemoVote, IEvent } from "../../types/types";
 
 export interface IAppSlice {
     keyboard: boolean;
@@ -23,8 +23,48 @@ const AppSlice = createSlice({
     name: "app",
     initialState,
     reducers: {
+        setMyDemoVote: (state, { payload }) => {
+            const { eventId, myDemoVote } = payload;
+
+            state.events = state.events.map((event) => {
+                if (event.id === eventId) {
+                    return {
+                        ...event,
+                        myDemoVote: myDemoVote,
+                    };
+                }
+                return event;
+            });
+        },
         setEvents: (state, { payload }) => {
-            state.events = payload;
+            let events = payload.events;
+
+            // Обработка лайков
+            if (payload.likes && payload.likes.length > 0) {
+                const likedEventIds = payload.likes.map((a: { eventId: string }) => a.eventId);
+                events = events.map((event: IEvent) => ({
+                    ...event,
+                    isLiked: likedEventIds.includes(event.id),
+                }));
+            }
+
+            // Обработка демо-голосов
+            if (payload.demoVotes && payload.demoVotes.length > 0) {
+                // Создаем мапу для быстрого поиска голосов по eventId
+                const demoVotesMap = payload.demoVotes.reduce((map: Record<string, string>, vote: IDemoVote) => {
+                    map[vote.eventId] = vote.voteType;
+                    return map;
+                }, {});
+
+                console.log(demoVotesMap)
+
+                events = events.map((event: IEvent) => ({
+                    ...event,
+                    myDemoVote: demoVotesMap[event.id] || null,
+                }));
+            }
+
+            state.events = events;
         },
         setVote: (state, { payload }) => {
             state.vote.title = payload.title;
@@ -50,6 +90,6 @@ const AppSlice = createSlice({
     },
 });
 
-export const { setEvents, setVote, openKeyboard, closeKeyboard, setAmount } = AppSlice.actions;
+export const { setMyDemoVote, setEvents, setVote, openKeyboard, closeKeyboard, setAmount } = AppSlice.actions;
 
 export default AppSlice.reducer;
