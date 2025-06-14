@@ -1,0 +1,113 @@
+* {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    user-select: none;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    font-family: var(--font-main);
+
+    -webkit-tap-highlight-color: transparent;
+    list-style: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+body {
+    overflow: hidden;
+    background-color: var(--color-main);
+}
+
+:root {
+    --color-main: #1c1c1c;
+    --color-main-darker: #171717;
+    --color-header: #0098ea;
+    --color-blue: #0096e7;
+    --color-text: #fff;
+    --color-vote-green: #48cf54;
+    --color-vote-red: #cf4848;
+
+    --border:  rgba(170, 170, 170, 0.5);
+
+
+    --font-main: "Roboto", sans-serif;
+
+    --padding-bottom: calc(var(--nav-bottom-position) + var(--nav-height) + 5px);
+    --padding-top: calc(var(--tg-safe-area-inset-top) + 43px);
+    --padding-inline: 16px;
+
+    --nav-bottom-position: max(12px, var(--tg-safe-area-inset-bottom));
+    --nav-height: 60px;
+
+    --fixed-width: calc(100vw - 32px);
+    --max-width: 600px;
+    --body-bg-color: #ff0000;
+
+    --border: 1px solid #c9c9c9;
+
+    --box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
+    --box-shadow-light: 0 0 10px 2px rgba(201, 201, 201, 0.1);
+
+    --color-blue-gradient: linear-gradient(to bottom right, #2d83ec, #1ac9ff);
+    --color-main-dark: #1e2337;
+
+    --color-skeleton-bg: rgba(230, 230, 230, 0.705);
+
+    --animation-skeletoner: skeletoner 1s 0.4s infinite;
+}
+
+.is_desktop {
+    --padding-top: 0px;
+    padding-bottom: var(--nav-bottom-position) + 10px;
+}
+
+button {
+    background: transparent;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    user-select: none;
+    color: black;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+a {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    color: black;
+    text-decoration: none;
+}
+
+img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.content {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+}
+
+.title-2 {
+    font-size: 18px;
+}
+
+@keyframes skeletoner {
+    0% {
+        left: -20%;
+    }
+
+    100% {
+        left: 120%;
+    }
+}

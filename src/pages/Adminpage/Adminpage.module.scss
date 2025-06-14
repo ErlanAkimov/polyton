@@ -1,0 +1,168 @@
+.wrapper {
+}
+
+.userList {
+    padding-inline: 16px;
+    margin-top: 8px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.pageTitle {
+    font-size: 14px;
+    margin-top: 12px;
+    text-align: center;
+    color: rgb(221, 221, 221);
+    font-weight: 500;
+}
+
+.noUsers {
+    background-color: var(--color-main-darker);
+    border-radius: 4px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.requestWrapper {
+    background-color: var(--color-main-darker);
+	box-shadow: var(--box-shadow);
+    padding: 10px 12px;
+    border-radius: 8px;
+}
+
+.userItem {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #c7c7c769;
+    padding-bottom: 6px;
+    margin-bottom: 6px;
+
+    .lside {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+    }
+}
+
+.username {
+    font-size: 14px;
+    color: white;
+    font-weight: 600;
+
+    &:hover {
+        cursor: pointer;
+        color: var(--color-blue);
+        text-decoration: underline;
+    }
+}
+
+.date {
+    font-size: 10px;
+    font-weight: 400;
+    opacity: 0.7;
+}
+
+.userId {
+    font-size: 10px;
+    color: white;
+    opacity: 0.6;
+}
+
+.buttons {
+    display: flex;
+    height: 28px;
+    gap: 6px;
+
+    .btn {
+        aspect-ratio: 1;
+        height: 100%;
+        background-color: var(--color-main);
+        border: 1px solid rgb(82, 82, 82, 0.4);
+
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btnIcon {
+        width: 18px;
+    }
+
+    .okBtn {
+        fill: rgb(58, 255, 58);
+    }
+
+    .neokBtn {
+        fill: rgb(255, 77, 77);
+    }
+}
+
+.result {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    span {
+        padding: 4px;
+        border-radius: 4px;
+        color: white;
+        font-size: 10px;
+        border: 1px solid rgb(82, 82, 82, 0.4);
+        background-color: var(--color-main);
+    }
+
+    .approvedIcon {
+        fill: rgb(58, 255, 58);
+    }
+    .declineIcon {
+        fill: rgb(255, 77, 77);
+    }
+}
+
+.bside {
+	display: flex;
+	justify-content: space-between;
+
+	.ton {
+		color: rgb(223, 223, 223);
+		font-weight: 700;
+		font-size: 14px;
+		display: flex;
+		align-items: center;
+		gap: 4px;
+	}
+}
+
+.txLink {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+
+    span {
+        color: var(--color-blue);
+        cursor: pointer;
+    }
+}
+
+.rText {
+	font-size: 12px;
+	color: white;
+	opacity: .7;
+	border-radius: 6px;
+	padding: 12px;
+	margin-top: 2px;
+	background-color: rgba(174, 174, 255, 0.171);
+}
+
+.approved {
+	font-size: 14px;
+	font-weight: 500;
+}

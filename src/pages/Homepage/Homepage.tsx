@@ -1,0 +1,52 @@
+import React, { useEffect, useState } from "react";
+import styles from "./Homepage.module.scss";
+import SectionTabs from "./SectionTabs";
+import EventCard from "./EventCard";
+import { IEvent } from "../../types/types";
+import { api } from "../../api";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { setEvents } from "../../store/slices/AppSlice";
+import CreateEvent from "./CreateEvent";
+
+const emptyArray = ["", "", ""];
+
+const Homepage: React.FC = () => {
+    const events = useAppSelector((state) => state.app.events);
+    const dispatch = useAppDispatch();
+    const [eventsRender, setEventsRender] = useState<IEvent[] | null>(events.length ? events : null);
+    const [tab, setTab] = useState<string>("token");
+
+    useEffect(() => {
+        if (!events.length) {
+            api.get("/getEvents").then((res) => dispatch(setEvents(res.data.events)));
+        }
+    }, []);
+
+    useEffect(() => {
+        setEventsRender(events.filter((a) => a.category.includes(tab)));
+    }, [events, tab]);
+
+    const handlePickTab = (s: string) => {
+        setTab(s);
+    };
+    return (
+        <div className={styles.wrapper}>
+            <h1 className={styles.marketTitle}>Market</h1>
+
+            <SectionTabs tab={tab} onPickTab={handlePickTab} />
+            {tab !== "event" && (
+                <div className={styles.list}>
+                    {eventsRender
+                        ? eventsRender.map((a, i) => <EventCard key={i} event={a} />)
+                        : emptyArray.map((_, i) => <div key={i} className={styles.eventskeleton}></div>)}
+                </div>
+            )}
+
+            {
+                tab === 'event' && <CreateEvent />
+            }
+        </div>
+    );
+};
+
+export default Homepage;

@@ -1,0 +1,180 @@
+.marketTitle {
+    margin-top: 6px;
+    margin-top: 16px;
+    // border-radius: 100px;
+    background-color: var(--color-main);
+    box-shadow: 0 0 10px 6px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    text-transform: uppercase;
+    color: white;
+    font-size: 16px;
+    padding: 10px;
+}
+
+.tabwrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-inline: var(--padding-inline);
+    margin-top: 10px;
+
+    .tab {
+        border-radius: 6px;
+        color: var(--color-blue);
+        height: 32px;
+        border: 1px solid transparent;
+        white-space: nowrap;
+
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--color-main-darker);
+        box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.3);
+        min-width: 80px;
+    }
+
+    .pickedTab {
+        @extend .tab;
+        border: 1px solid var(--color-blue);
+    }
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-inline: var(--padding-inline);
+    margin-top: 12px;
+    overflow-y: scroll;
+    max-height: calc(100vh - var(--padding-top) - 180px);
+    padding-bottom: var(--padding-bottom);
+}
+
+.eventBox {
+    // min-height: 140px;
+    width: 100%;
+    border-radius: 12px;
+    background-color: #171717;
+    position: relative;
+    padding: 12px;
+}
+
+.event {
+    @extend .eventBox;
+}
+
+.eventskeleton {
+    @extend .eventBox;
+    overflow: hidden;
+    position: relative;
+    &::after {
+        content: "";
+        position: absolute;
+        width: 30px;
+        rotate: 8deg;
+        height: 120px;
+        background-color: rgb(0, 0, 0, 0.1);
+        box-shadow: 0 0 30px 16px rgb(0, 0, 0, 0.1);
+        left: 20px;
+        animation: skeletoner 1s ease-in-out infinite;
+    }
+}
+
+.like {
+    fill: #858585;
+    position: absolute;
+
+    top: 12px;
+    right: 60px;
+}
+
+.head {
+    display: flex;
+    gap: 10px;
+
+    .imgBlock {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 64px;
+        min-width: 64px;
+        height: 64px;
+        aspect-ratio: 1;
+    }
+
+    img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        border-radius: 6px;
+        border: 1px solid #252525;
+        box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.26);
+    }
+
+    .title {
+        font-size: 14px;
+        line-height: 16px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .creator {
+        font-size: 10px;
+        color: var(--color-blue);
+        opacity: 0.8;
+        line-height: 10px;
+        margin-top: 0;
+        margin-top: 2px;
+        display: flex;
+        gap: 4px;
+        align-items: center;
+
+        .walletIcon {
+            width: 14px;
+            fill: var(--color-blue)
+        }
+    }
+
+    .description {
+        color: white;
+        opacity: 0.6;
+        font-size: 12px;
+        line-height: 14px;
+        margin-top: 6px;
+        font-weight: 400;
+        display: -webkit-box;
+        line-clamp: 2;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .creatorNft {
+        background-color: #b44949;
+        border-radius: 3px;
+        width: 38px;
+        height: 23px;
+        font-size: 12px;
+        line-height: 12px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        // opacity: .8;
+        position: absolute;
+        top: 10px;
+        right: 14px;
+    }
+}
+
+@keyframes skeletoner {
+    0% {
+        left: -20%;
+    }
+
+    100% {
+        left: 120%;
+    }
+}

@@ -1,0 +1,25 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	width: 100vw;
+	height: calc(100vh - 140px);
+	padding-inline: 16px;
+}
+
+.modal {
+    border: var(--border);
+	width: 100vw;
+	padding: 20px;
+	border-radius: 12px;
+
+	font-size: 14px;
+	color: rgba(255, 255, 255, 0.9);
+	font-weight: 400;
+	text-align: center;
+
+	span {
+		color: var(--color-blue);
+		font-weight: 500;
+	}
+}

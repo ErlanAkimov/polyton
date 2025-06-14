@@ -1,0 +1,217 @@
+.wrapper {
+    padding-inline: var(--padding-inline);
+    padding-top: 10px;
+    max-height: 100vh;
+    padding-bottom: 160px;
+    overflow-y: scroll;
+}
+
+.info {
+    color: white;
+    display: flex;
+    gap: 12px;
+    position: relative;
+
+    .imgSide {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .share {
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        color: rgba(253, 253, 253, 0.7);
+        border-radius: 4px;
+        font-weight: 600;
+        box-shadow: 0 0 10px 2px rgba(140, 140, 219, 0.1);
+        background-color: var(--color-blue);
+
+        svg {
+            width: 18px;
+            height: 18px;
+
+            path {
+                stroke: rgba(253, 253, 253, 0.7);
+            }
+        }
+    }
+}
+
+.imageBlock {
+    min-width: 84px;
+    min-height: 84px;
+    width: 84px;
+    height: 84px;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--box-shadow-dark);
+    border: 1px solid rgba(170, 170, 170, 0.5);
+}
+
+.title {
+    font-size: 16px;
+    color: white;
+}
+
+.creator {
+    font-size: 10px;
+    color: var(--color-blue);
+    opacity: 0.8;
+    line-height: 10px;
+    margin-top: 0;
+    margin-top: 2px;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+
+    .walletIcon {
+        width: 14px;
+        fill: var(--color-blue);
+    }
+}
+
+.description {
+    font-size: 12px;
+    color: white;
+    opacity: 0.7;
+}
+
+.infoContent {
+    width: 100%;
+    position: relative;
+}
+
+.exp {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+
+    .clock {
+        width: 18px;
+    }
+
+    p {
+        font-weight: 700;
+        color: white;
+    }
+}
+
+.inputBlock {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    gap: 6px;
+
+    input {
+        color: white;
+        font-size: 13px;
+        font-weight: 500;
+        padding-inline: 12px;
+        width: 100%;
+        height: 40px;
+        border: 2px dotted #0098e9;
+        background-color: #0098e91c;
+
+        &::placeholder {
+            color: white;
+            opacity: 0.4;
+        }
+    }
+
+    button {
+        background-color: #0098e91c;
+        color: white;
+        font-size: 20px;
+        border-radius: 4px;
+        aspect-ratio: 1;
+        height: 40px;
+    }
+}
+
+.picker {
+    margin-top: 20px;
+
+    &Title {
+        font-size: 15px;
+        font-weight: 500;
+        color: white;
+        opacity: 0.6;
+    }
+}
+
+.lore {
+    border-radius: 6px;
+    border: 1px solid rgba(170, 170, 170, 0.5);
+    padding: 12px;
+    margin-top: 12px;
+
+    .loretitle {
+        font-size: 12px;
+        color: white;
+        font-weight: 500;
+        text-align: center;
+    }
+
+    .loretext {
+        font-size: 10px;
+        line-height: 12px;
+        color: white;
+        opacity: 0.5;
+        margin-top: 10px;
+        font-weight: 400;
+    }
+
+    .numberedList {
+        counter-reset: list-counter;
+        list-style-type: none;
+        padding-left: 0;
+        padding-left: 15px;
+    }
+
+    .numberedList li {
+        counter-increment: list-counter;
+        position: relative;
+        margin-top: 8px;
+    }
+
+    .numberedList li::before {
+        content: counter(list-counter) ". ";
+        position: absolute;
+        color: var(--color-blue);
+        left: -16px;
+        top: 0;
+        font-weight: bold;
+    }
+}
+
+.descriptionWrapper {
+    display: flex;
+    flex-direction: column;
+
+    .inner {
+        overflow: hidden;
+        transition: 0.2s ease-in-out;
+        padding-bottom: 6px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .showDescriptionButton {
+        box-shadow: 0 0 10px 4px var(--color-main);
+        z-index: 10;
+        padding: 2px 0;
+        color: var(--color-blue);
+        text-align: right;
+    }
+}

@@ -1,0 +1,41 @@
+.wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+	z-index: 10;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-inline: 20px;
+
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+		background-color: rgba(0, 0, 0, 0.2);
+		z-index: 0;
+	}
+}
+
+
+.modal {
+	position: relative;
+	z-index: 1;
+	background-color: var(--color-main-darker);
+	padding: 20px;
+	box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.336);
+	border-radius: 12px;
+	width: 100%;
+
+
+	.title {
+		color: white;
+		font-size: 16px;
+		text-align: center;
+	}
+}
