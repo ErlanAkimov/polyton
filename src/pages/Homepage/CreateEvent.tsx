@@ -9,10 +9,10 @@ import { ICreatorNft } from "../../types/types";
 const colors = ["#B1B1B1", "#F09967", "#A52A2A"];
 
 const CreateEvent: React.FC = () => {
-    const [token, setToken] = useState<string>("EQDZYWEmkXnF4TOfw0axhu5HUDjANdKF9GUg9o_4nFJH_uM0");
-    const [mcap, setMcap] = useState<string>("20000");
+    const [token, setToken] = useState<string>("");
+    const [mcap, setMcap] = useState<string>("");
     const [expDate, setExpDate] = useState<string>("");
-    const [liquidity, setLiquidity] = useState<string>("0.5");
+    const [liquidity, setLiquidity] = useState<string>("");
     const [result, setResult] = useState<string>("v1");
     const [_, setShortDescription] = useState<string>("");
     const [description, setDescription] = useState<string>("");
@@ -26,19 +26,19 @@ const CreateEvent: React.FC = () => {
             return;
         }
 
-        // if (!matchedNfts || matchedNfts.length <= 0) {
-        //     window.Telegram.WebApp.showPopup({
-        //         title: "Отсутствует NFT",
-        //         message: "Нельзя создавать события с кошелька, на котором нет Polyton CREATORS NFT.",
-        //         buttons: [{ text: "Ок", type: "ok" }],
-        //     });
-        //     return;
-        // }
+        if (!matchedNfts || matchedNfts.length <= 0) {
+            window.Telegram.WebApp.showPopup({
+                title: "Отсутствует NFT",
+                message: "Нельзя создавать события с кошелька, на котором нет Polyton CREATORS NFT.",
+                buttons: [{ text: "Ок", type: "ok" }],
+            });
+            return;
+        }
 
-        // if (Number(liquidity) < 10) {
-        //     window.Telegram.WebApp.showAlert("Ликвидность не может быть ниже 10 TON");
-        //     return;
-        // }
+        if (Number(liquidity) < 10) {
+            window.Telegram.WebApp.showAlert("Ликвидность не может быть ниже 10 TON");
+            return;
+        }
 
         try {
             Address.parse(token);
@@ -61,8 +61,7 @@ const CreateEvent: React.FC = () => {
                 position: liquidity,
                 result,
                 description,
-                // creatorNft: matchedNfts.find((a) => a.index === creatorNft),
-                creatorNft: nftList[2],
+                creatorNft: matchedNfts.find((a) => a.index === creatorNft),
             })
             .then((res) => {
                 tc.sendTransaction(res.data.transaction)
@@ -88,7 +87,6 @@ const CreateEvent: React.FC = () => {
             })
     };
 
-    // window.Telegram.WebApp.showAlert(Address.parse(wallet?.account.address!).toString({bounceable: false}));
     const handleChangeToken = (e: React.ChangeEvent<HTMLInputElement>) => {
         setToken(e.target.value);
     };

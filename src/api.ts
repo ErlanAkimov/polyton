@@ -1,11 +1,11 @@
 import axios from "axios";
 
 export const api = axios.create({
-	baseURL: import.meta.env.DEV ?  "https://polyton.daytona-project.com/api/v1" : "https://whalepad.daytona-project.com/api/v1/"
+	baseURL: import.meta.env.DEV ?  "https://polyton.daytona-project.com/api/v1" : "https://api.opolyton.ru/api/v1/"
 })
 
 export const authApi = axios.create({
-	baseURL: import.meta.env.DEV ?  "https://polyton.daytona-project.com/api/v1/auth/" : "https://whalepad.daytona-project.com/api/v1/",
+	baseURL: import.meta.env.DEV ?  "https://polyton.daytona-project.com/api/v1/auth/" : "https://api.opolyton.ru/api/v1/",
 	headers: {
 		'init-data': window.Telegram.WebApp.initData
 	}
