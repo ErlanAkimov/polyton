@@ -12,6 +12,5 @@ export default function () {
             window.Telegram.WebApp.showAlert("Wallet disconnected: Testnet is not support.");
             tc.disconnect();
         }
-
     }, [wallet]);
 }

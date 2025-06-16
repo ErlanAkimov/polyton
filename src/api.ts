@@ -12,5 +12,5 @@ export const authApi = axios.create({
 })
 
 export const toncenter = axios.create({
-	baseURL: import.meta.env.DEV ? `https://testnet.toncenter.com/api/v3` : `https://toncenter.com/api/v3`
+	baseURL: import.meta.env.DEV ? `https://toncenter.com/api/v3` : `https://toncenter.com/api/v3`
 })

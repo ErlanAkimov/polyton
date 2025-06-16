@@ -1,15 +1,8 @@
-interface ICreatorNFT {
-    rank: string;
-    address: string;
-    color: string;
-}
-
 interface IVote {
     title: string;
     collected: string;
     members: number;
 }
-
 
 export interface IEvent {
     id: string;
@@ -18,7 +11,7 @@ export interface IEvent {
     description: string;
     image: string;
     creator: string;
-    creator_nft: ICreatorNFT;
+    creatorNft: ICreatorNft;
     votes: Record<"v1" | "v2", IVote>;
     expires_at: string;
     created_at: string;
@@ -29,7 +22,7 @@ export interface IEvent {
         v1: number;
         v2: number;
     };
-    myDemoVote: 'v1' | 'v2' | null;
+    myDemoVote: "v1" | "v2" | null;
     isLiked?: boolean;
 }
 
@@ -38,4 +31,14 @@ export interface IDemoVote {
     eventId: string;
     updatedAt: Date;
     voteType: string;
+}
+
+export interface ICreatorNft {
+    address: string;
+    symbol: string;
+    collection: number;
+    ownerFee: number;
+    serviceFee: number;
+    firstOwnerFee: number;
+    index: number;
 }

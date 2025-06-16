@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styles from "./Homepage.module.scss";
 import SectionTabs from "./SectionTabs";
 import EventCard from "./EventCard";
-import { IEvent } from "../../types/types";
 import { api } from "../../api";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { setEvents } from "../../store/slices/AppSlice";
@@ -13,34 +12,39 @@ const emptyArray = ["", "", ""];
 const Homepage: React.FC = () => {
     const events = useAppSelector((state) => state.app.events);
     const dispatch = useAppDispatch();
-    const [eventsRender, setEventsRender] = useState<IEvent[] | null>(events.length ? events : null);
     const [tab, setTab] = useState<string>("token");
+    const [isLoading, setIsLoading] = useState(!events.length);
 
     useEffect(() => {
-        if (!events.length) {
-            api.get(`/getEvents?userId=${window.Telegram.WebApp.initDataUnsafe.user.id}`).then((res) => {
-                dispatch(setEvents(res.data));
-            });
+        if (events.length <= 1) {
+            setIsLoading(true);
+            api.get(`/getEvents?userId=${window.Telegram.WebApp.initDataUnsafe.user.id}`)
+                .then((res) => {
+                    dispatch(setEvents(res.data));
+                })
+                .finally(() => setIsLoading(false));
         }
-    }, []);
+    }, [dispatch, events.length]);
 
-    useEffect(() => {
-        setEventsRender(events.filter((a) => a.category.includes(tab)));
+    const filteredEvents = useMemo(() => {
+        return events.filter((a) => a.category.includes(tab));
     }, [events, tab]);
 
     const handlePickTab = (s: string) => {
         setTab(s);
     };
+
     return (
         <div className={styles.wrapper}>
             <h1 className={styles.marketTitle}>Market</h1>
 
             <SectionTabs tab={tab} onPickTab={handlePickTab} />
+
             {tab !== "event" && (
                 <div className={styles.list}>
-                    {eventsRender
-                        ? eventsRender.map((a, i) => <EventCard key={i} event={a} />)
-                        : emptyArray.map((_, i) => <div key={i} className={styles.eventskeleton}></div>)}
+                    {isLoading || !events.length
+                        ? emptyArray.map((_, i) => <div key={i} className={styles.eventskeleton}></div>)
+                        : filteredEvents.map((a) => <EventCard key={`${a.id}-${tab}`} event={a} />)}
                 </div>
             )}
 

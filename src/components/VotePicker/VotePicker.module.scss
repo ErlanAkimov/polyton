@@ -24,12 +24,12 @@
         font-weight: 600;
         font-size: 13px;
         white-space: nowrap;
-        transition: width .5s;
     }
 
     .voteVariant {
         width: 100%;
         min-width: 22%;
+        transition: width .5s;
 
         .poolsize {
             margin-top: 4px;

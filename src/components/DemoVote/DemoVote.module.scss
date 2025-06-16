@@ -1,8 +1,8 @@
 .demo {
     margin-top: 10px;
+    padding-bottom: 14px;
 
     .progress {
-        background: var(--color-blue-gradient);
         height: 36px;
         border-radius: 6px;
         margin-top: 6px;
@@ -11,6 +11,26 @@
         justify-content: space-between;
         padding-inline: 12px;
         position: relative;
+        border: 1px solid rgba(160, 160, 160, 0.1);
+        box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
+        * {
+            z-index: 1;
+            position: relative;
+        }
+    }
+
+    .bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: var(--color-blue-gradient);
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        left: 0;
+        right: 0;
+        border-radius: 6px;
+        transition: width 0.5s;
     }
 
     .demoBtn {
@@ -52,13 +72,24 @@
         transform: translate(-50%, -50%);
         background-color: white;
         box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.2);
-        transition: left .5s;
+        transition: left 0.5s;
+
+        span {
+            position: absolute;
+            bottom: -18px;
+            text-align: center;
+            font-size: 11px;
+            color: white;
+            font-weight: 600;
+            width: 21px;
+            left: -7px;
+        }
     }
 }
 
 .pickerTitle {
-    color: rgba(255, 255, 255, 0.781);
-    font-size: 12px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 13px;
     font-weight: 400;
     padding-left: px;
 }

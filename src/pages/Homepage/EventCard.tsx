@@ -10,7 +10,7 @@ import { authApi } from "../../api";
 const EventCard: React.FC<{ event: IEvent }> = ({ event }) => {
     const navigate = useNavigate();
     const [isLiked, setIsLiked] = useState<boolean | undefined>(event.isLiked);
-    const handleOpenKeyboard = () => {
+    const handleNavigate = () => {
         navigate(`/event/${event.id}`);
     };
 
@@ -20,29 +20,30 @@ const EventCard: React.FC<{ event: IEvent }> = ({ event }) => {
     };
 
     return (
-        <div className={styles.event} onClick={handleOpenKeyboard}>
-            <IconLike isLiked={isLiked} size={20} className={styles.like} onClick={handleLike} />
-            <div className={styles.head}>
-                <div className={styles.imgBlock}>
-                    <img src={event.image} alt="" />
-                </div>
+        <div className={styles.event}>
+            <div onClick={handleNavigate}>
+                <IconLike isLiked={isLiked} size={20} className={styles.like} onClick={handleLike} />
+                <div className={styles.head}>
+                    <div className={styles.imgBlock}>
+                        <img src={event.image} alt="" />
+                    </div>
 
-                <div>
-                    <h3 className={styles.title}>{event.title}</h3>
-                    <p className={styles.creator}>
-                        <IconWallet className={styles.walletIcon} />
-                        ...{event.creator.slice(44, 48)}
-                    </p>
+                    <div>
+                        <h3 className={styles.title}>{event.title}</h3>
+                        <p className={styles.creator}>
+                            <IconWallet className={styles.walletIcon} />
+                            ...{event.creator.slice(44, 48)}
+                        </p>
 
-                    <Nft rank={event.creator_nft.rank} top={10} right={14} />
+                        <Nft className={styles.nftCard} nftItem={event.creatorNft} />
 
-                    <div className={styles.description}>
-                        <span>{event.shortDescription}</span>
+                        <div className={styles.description}>
+                            <span>{event.shortDescription}</span>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <VotePicker className={styles.disableClicks} event={event} onClick={() => {}} />
+            <VotePicker event={event} onClick={() => {}} navigate={handleNavigate} />
         </div>
     );
 };

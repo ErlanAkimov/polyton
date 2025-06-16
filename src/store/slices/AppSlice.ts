@@ -56,8 +56,6 @@ const AppSlice = createSlice({
                     return map;
                 }, {});
 
-                console.log(demoVotesMap)
-
                 events = events.map((event: IEvent) => ({
                     ...event,
                     myDemoVote: demoVotesMap[event.id] || null,

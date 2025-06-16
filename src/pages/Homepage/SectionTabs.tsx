@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "./Homepage.module.scss";
-import { useLocation } from "react-router-dom";
 
 interface Props {
     tab: string;
@@ -8,8 +7,6 @@ interface Props {
 }
 
 const SectionTabs: React.FC<Props> = ({ tab, onPickTab }) => {
-    const location = useLocation();
-
     return (
         <div className={styles.tabwrapper}>
             <button onClick={() => onPickTab("token")} className={tab === "token" ? styles.pickedTab : styles.tab}>

@@ -7,21 +7,24 @@ import useBackButton from "../../hooks/useBackButton";
 import { IconShare, IconWallet } from "../../components/icons";
 import { motion } from "motion/react";
 import VotePicker from "../../components/VotePicker/VotePicker";
-import { fromNano, toNano } from "@ton/ton";
 import Nft from "../../components/Nft/Nft";
 import FullDescription from "./FullDescription";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { setEvents } from "../../store/slices/AppSlice";
+import { useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
 
 const Eventpage: React.FC = () => {
     useBackButton();
     const { eventId } = useParams();
-    const eventFromRedux = useAppSelector((state) => state.app.events);
-    const [event, setEvent] = useState<IEvent | null>(eventFromRedux?.filter((e) => e.id === eventId)[0] || null);
+    const events = useAppSelector((state) => state.app.events);
+    const [event, setEvent] = useState<IEvent | null>(events?.find((e) => e.id === eventId) || null);
 
     const [amount, setAmount] = useState<string>("");
     const [pickedVote, setPickedVote] = useState<"v1" | "v2">("v1");
     const dispatch = useAppDispatch();
+    const wallet = useTonWallet();
+    const [tc] = useTonConnectUI();
+    const [potentialProfit, setPotentialProfit] = useState<string | number>("");
 
     const handleVote = () => {
         const wa = window.Telegram.WebApp;
@@ -33,20 +36,36 @@ const Eventpage: React.FC = () => {
             wa.showAlert("Введите ссуму для голосования (min 0.5 TON)");
             return;
         }
+
+        if (!wallet) {
+            tc.openModal();
+            return;
+        }
+
         authApi
             .post(`/vote`, {
                 eventId: event?.id,
                 pickedVote,
                 amount,
+                walletAddress: wallet.account.address
             })
-            .then(() => {
-                setEvent((prev) => {
-                    const old = prev!.votes[pickedVote].collected;
-
-                    const newValue = Number(old) + Number(toNano(amount));
-                    prev!.votes[pickedVote].collected = newValue.toString();
-                    return prev;
+            .then((res) => {
+                tc.sendTransaction(res.data.transaction, {
+                    modals: "all",
+                }).then(() => {
+                    wa.showPopup({
+                        title: "Транзакция в обработке",
+                        message: "Данные будут обновлены после того как транзакция появится в блокчейне TON.",
+                        buttons: [{ text: "OK", type: "ok" }],
+                    });
                 });
+                // setEvent((prev) => {
+                //     const old = prev!.votes[pickedVote].collected;
+
+                //     const newValue = Number(old) + Number(toNano(amount));
+                //     prev!.votes[pickedVote].collected = newValue.toString();
+                //     return prev;
+                // });
             });
     };
 
@@ -84,9 +103,18 @@ const Eventpage: React.FC = () => {
             );
             return;
         }
-    }, []);
+    }, [event]);
+
+    useEffect(() => {
+        if (!event) return;
+        setEvent(events.find((a) => a.id === event.id) || null);
+    }, [events]);
 
     const handleShare = () => {
+        if (!event) return;
+        authApi.post(`/shareEvent`, {
+            eventId: event?.id,
+        });
         window.Telegram.WebApp.openTelegramLink(
             `https://t.me/share/url?url=https://t.me/${import.meta.env.VITE_BOT_NAME}?startapp=event_${eventId}-ref_${window.Telegram.WebApp.initDataUnsafe.user.id}`
         );
@@ -106,7 +134,7 @@ const Eventpage: React.FC = () => {
                                 <img src={event.image} alt="" />
                             </div>
 
-                            <Nft rank={event.creator_nft.rank} />
+                            <Nft nftItem={event.creatorNft} className={styles.nftCard}/>
 
                             <button className={styles.share} onClick={handleShare}>
                                 <IconShare /> Share
@@ -141,7 +169,7 @@ const Eventpage: React.FC = () => {
 
                     <div className={styles.picker}>
                         <p className={styles.pickerTitle}>Выбери прогноз события</p>
-                        <VotePicker amount={amount} picked={pickedVote} event={event} onClick={handlePickVote} />
+                        <VotePicker setPotentialProfit={setPotentialProfit} amount={amount} picked={pickedVote} event={event} onClick={handlePickVote} />
                     </div>
 
                     {/* <DemoVote event={event} setUnlockVote={setVoteUnlocked} /> */}
@@ -154,14 +182,8 @@ const Eventpage: React.FC = () => {
                             </p>
                         ) : (
                             <p className={styles.loretitle}>
-                                Ваша потенциальная прибыль составит{" "}
-                                {(
-                                    Number(amount) *
-                                    (Number(fromNano(event.votes[pickedVote].collected)) /
-                                        Number(fromNano(event.votes[pickedVote].collected)) +
-                                        1)
-                                ).toFixed(2)}{" "}
-                                TON, текущие коэффициенты меняются с учетом новых голосов
+                                Ваша потенциальная прибыль составит {potentialProfit} TON, текущие коэффициенты меняются
+                                с учетом новых голосов
                             </p>
                         )}
 

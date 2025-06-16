@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./Anketapage.module.scss";
 import copy from "copy-to-clipboard";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +16,6 @@ const Anketapage: React.FC = () => {
         const regex = /^\d*\.?\d*$/;
 
         if (regex.test(value)) {
-            console.log(tonAmount);
             setTonAmount(value);
         } else {
             e.preventDefault();

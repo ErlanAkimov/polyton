@@ -10,9 +10,10 @@ export default function () {
     const param = params.get("tgWebAppStartParam")?.split("-");
     const navigate = useNavigate();
 
-    const ref = Number(param?.filter((a) => a.startsWith("ref_"))[0].split("_")[1]) || null;
 
-    const eventId = param?.filter((a) => a.startsWith("event"))[0].split("_")[1] || null;
+    const eventId = param?.filter((a) => a.startsWith("event"))[0]?.split("_")[1] || null;
+    const ref = Number(param?.filter((a) => a.startsWith("ref_"))[0]?.split("_")[1]) || null;
+
 
     const dispatch = useAppDispatch();
 

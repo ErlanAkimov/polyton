@@ -58,10 +58,18 @@
     background-color: #171717;
     position: relative;
     padding: 12px;
+
 }
 
 .event {
     @extend .eventBox;
+
+    .nftCard {
+        position: absolute;
+        top: 10px;
+        color: white;
+        right: 12px;
+    }
 }
 
 .eventskeleton {
@@ -184,6 +192,7 @@
     font-size: 14px;
     background: var(--color-blue-gradient);
     box-shadow: var(--box-shadow);
+    z-index: 10;
 }
 
 @keyframes skeletoner {

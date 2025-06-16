@@ -17,6 +17,7 @@ const App: React.FC = () => {
     useUserAuth();
     useWallet();
 
+
     useEffect(() => {
         const wa = window.Telegram.WebApp;
 
