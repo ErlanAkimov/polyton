@@ -1,0 +1,42 @@
+.wrapper {
+    padding-inline: var(--padding-inline);
+}
+
+.pagetitle {
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.dev {
+    border-radius: 12px;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    background-color: var(--color-main-darker);
+    margin-top: 12px;
+    border: 1px solid rgba(80, 80, 80, 0.2);
+    box-shadow: var(--box-shadow);
+
+    .text {
+        font-size: 13px;
+        font-weight: 300;
+        color: white;
+        opacity: 0.7;
+    }
+}
+
+.skeleton {
+    height: 60px;
+    width: 100%;
+    border-radius: 12px;
+    background-color: var(--color-main-darker);
+}

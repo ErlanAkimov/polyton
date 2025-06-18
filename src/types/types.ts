@@ -13,7 +13,6 @@ export interface IEvent {
     creator: string;
     creatorNft: ICreatorNft;
     votes: Record<"v1" | "v2", IVote>;
-    expires_at: string;
     created_at: string;
     status: string;
     collectedAmount: string;

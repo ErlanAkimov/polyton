@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Adminpage.module.scss";
-import useBackButton from "../../hooks/useBackButton";
 import { useAppSelector } from "../../store/store";
 import { useNavigate } from "react-router-dom";
 import { authApi } from "../../api";
@@ -19,7 +18,6 @@ interface IRequest {
 const Adminpage: React.FC = () => {
     const user = useAppSelector((state) => state.user);
     const navigate = useNavigate();
-    useBackButton();
     const [usersList, setUsersList] = useState<IRequest[] | null>(null);
 
     useEffect(() => {

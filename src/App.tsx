@@ -12,6 +12,7 @@ import Adminpage from "./pages/Adminpage/Adminpage";
 import Pendingpage from "./pages/Pendingpage/Pendingpage";
 import Anketapage from "./pages/Anketapage/Anketapage";
 import { authApi } from "./api";
+import Historypage from "./pages/Historypage/Historypage";
 
 const App: React.FC = () => {
     useUserAuth();
@@ -44,6 +45,8 @@ const App: React.FC = () => {
                 <Route path="/admin-panel" element={<Adminpage />} />
                 <Route path="/pending" element={<Pendingpage />} />
                 <Route path="/anketa" element={<Anketapage />} />
+                <Route path="/history" element={<Historypage />} />
+                
             </Routes>
         </div>
     );

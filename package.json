@@ -7,7 +7,7 @@
         "dev": "vite",
         "build": "tsc -b && vite build",
         "prettier": "npx prettier --write .",
-        "send": "bash -c \"rsync -avz --progress --delete ./build/* vps:/var/www/whalepad/front/build/\""
+        "send": "bash -c \"rsync -avz --delete ./build/* poly:/var/www/opolyton.ru/build/\""
     },
     "dependencies": {
         "@reduxjs/toolkit": "^2.7.0",

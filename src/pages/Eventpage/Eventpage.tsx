@@ -116,7 +116,7 @@ const Eventpage: React.FC = () => {
             eventId: event?.id,
         });
         window.Telegram.WebApp.openTelegramLink(
-            `https://t.me/share/url?url=https://t.me/${import.meta.env.VITE_BOT_NAME}?startapp=event_${eventId}-ref_${window.Telegram.WebApp.initDataUnsafe.user.id}`
+            `https://t.me/share/url?url=https://t.me/Polyctonsbot?startapp=event_${eventId}-ref_${window.Telegram.WebApp.initDataUnsafe.user.id}`
         );
     };
 

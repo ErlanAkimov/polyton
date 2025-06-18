@@ -10,8 +10,9 @@
     align-items: center;
     justify-content: space-between;
 
-	transition: height .3s ease-in-out;
-	
+    transition: height 0.3s ease-in-out;
+    z-index: 21;
+    position: relative;
 
     h1 {
         color: white;
@@ -41,5 +42,102 @@
         color: white;
         font-weight: 700;
         font-size: 14px;
+    }
+}
+
+.headerBtns {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.menuBtn {
+    border-radius: 100px;
+    height: 32px;
+    width: 32px;
+    background-color: rgba(2, 2, 2, 0.1);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+
+    .menuLine {
+        width: 16px;
+        height: 2px;
+        background-color: #fff;
+        border-radius: 12px;
+    }
+}
+
+.overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.24);
+    z-index: 20;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filtler: blur(4px);
+}
+
+.menu {
+    position: fixed;
+    top: calc(var(--padding-top) + 64px);
+    right: 16px;
+    z-index: 22;
+    padding: 6px;
+    background-color: var(--color-main-darker);
+    border-radius: 12px;
+    box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--color-main);
+
+    &Element {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 12px;
+        border-radius: 8px;
+
+        &:hover {
+            background-color: var(--color-main);
+        }
+
+        button {
+            font-size: 15px;
+            font-weight: 500;
+            color: white;
+        }
+    }
+
+    $red: rgb(202, 59, 59);
+
+    .logoutMenuElement {
+        @extend .menuElement;
+
+        button {
+            color: $red;
+            transition: color .2s;
+        }
+
+        &:hover {
+            background-color: rgba(255, 35, 35, 0.1);
+
+            button {
+                color: white;
+            }
+
+            .logoutIcon {
+                fill: white;
+            }
+        }
+    }
+
+    .logoutIcon {
+        transition: fill .2s;
+        fill: $red;
     }
 }

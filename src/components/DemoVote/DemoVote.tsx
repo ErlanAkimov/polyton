@@ -50,7 +50,7 @@ const DemoVote: React.FC<Props> = ({ event }) => {
 
     return (
         <div className={styles.demo}>
-            <p className={styles.pickerTitle}>{!voted ? "Проголосуй, чтобы увидеть:" : "Free мнение:"}</p>
+            <p className={styles.pickerTitle}>{!voted ? "Чтобы увидеть пулы, бесплатно проголосуй:" : "Free мнение:"}</p>
             <div className={styles.progress}>
                 <div
                     style={{ opacity: voted === "v2" ? 0.5 : 1 }}
@@ -62,12 +62,16 @@ const DemoVote: React.FC<Props> = ({ event }) => {
                 </div>
                 <div
                     className={styles.bg}
-                    style={voted ? {
-                        left: left > 50 ? 0 : "initial",
-                        right: left < 50 ? 0 : "initial",
-                        width: `${left > 50 ? left : 100 - left}%`,
-                        borderRadius: left > 50 ? "6px 6px 0 0 " : "0 6px 6px 0",
-                    } : {}}
+                    style={
+                        voted
+                            ? {
+                                  left: left > 50 ? 0 : "initial",
+                                  right: left < 50 ? 0 : "initial",
+                                  width: `${left > 50 ? left : 100 - left}%`,
+                                  borderRadius: left > 50 ? "6px 0 0 6px" : "0 6px 6px 0",
+                              }
+                            : {}
+                    }
                 />
                 <div className={styles.line} style={{ left: `${left}%` }}>
                     <span>{voted ? (left > 50 ? left.toFixed(0) : (100 - left).toFixed(0)) : "? "}%</span>

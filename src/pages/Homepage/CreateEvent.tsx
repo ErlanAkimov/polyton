@@ -82,9 +82,13 @@ const CreateEvent: React.FC = () => {
                     })
                     .catch(() => {});
             })
-            .catch((err) => {
-                console.log(err)
-            })
+            .catch((e) => {
+                if (e.response.data.reason === "limit") {
+                    window.Telegram.WebApp.showAlert(
+                        `Достигнут лимит на голосований для NFT. Дождитесь завершения голосований, созданных с помощью этой NFT и попробуйте снова`
+                    );
+                }
+            });
     };
 
     const handleChangeToken = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,7 +115,7 @@ const CreateEvent: React.FC = () => {
 
     const handleChangeShortDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
         setShortDescription(e.target.value);
-        handleChangeShortDescription
+        handleChangeShortDescription;
     };
 
     const [nftLoading, setNftLoading] = useState<boolean>(false);
@@ -193,14 +197,6 @@ const CreateEvent: React.FC = () => {
                 placeholder="EQ..."
                 text="На какой токен хотите создать прогноз?"
             />
-
-            {/* <Input
-                value={shortDescription}
-                onChange={handleChangeShortDescription}
-                title="Краткое описание"
-                placeholder="Краткое описание"
-                text="Опишите голосование в паре предложений"
-            /> */}
 
             <Input
                 value={description}

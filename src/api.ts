@@ -5,7 +5,7 @@ export const api = axios.create({
 })
 
 export const authApi = axios.create({
-	baseURL: import.meta.env.DEV ?  "https://polyton.daytona-project.com/api/v1/auth/" : "https://api.opolyton.ru/api/v1/",
+	baseURL: import.meta.env.DEV ?  "https://polyton.daytona-project.com/api/v1/auth/" : "https://api.opolyton.ru/api/v1/auth/",
 	headers: {
 		'init-data': window.Telegram.WebApp.initData
 	}
