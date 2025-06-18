@@ -45,6 +45,8 @@ const Eventpage: React.FC = () => {
         authApi
             .post(`/vote`, {
                 eventId: event?.id,
+                eventTitle: event.title,
+                eventImage: event.image,
                 pickedVote,
                 amount,
                 walletAddress: wallet.account.address
