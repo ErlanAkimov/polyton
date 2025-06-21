@@ -1,0 +1,108 @@
+.wrapper {
+    padding-inline: var(--padding-inline);
+    margin-top: 20px;
+    height: calc(100vh - 70px);
+    overflow-y: scroll;
+    padding-bottom: 100px;
+}
+.inputTitle {
+    font-size: 14px;
+    color: rgb(233, 233, 233, 0.8);
+    font-weight: 400;
+}
+.block {
+    margin-top: 12px;
+
+    .input {
+        background-color: rgba(150, 150, 150, 0.1);
+        width: 100%;
+        margin-top: 6px;
+        padding-inline: 12px;
+        height: 32px;
+        color: white;
+    }
+}
+.inputDescription {
+    color: white;
+    opacity: 0.6;
+    font-size: 11px;
+    font-weight: 300;
+    margin-top: 4px;
+    margin-left: 4px;
+}
+.send {
+    color: white;
+    font-size: 14px;
+
+    height: 40px;
+    background-color: var(--color-blue);
+    width: 100%;
+    margin-top: 30px;
+    border-radius: 6px;
+}
+
+.picker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.pickBtn {
+    height: 32px;
+    width: 100%;
+    font-weight: 500;
+    color: white;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.5;
+}
+
+.pickedBtn {
+    @extend .pickBtn;
+    opacity: 1;
+}
+
+.showNow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    p {
+        font-size: 15px;
+        color: white;
+    }
+
+    .toggler {
+        width: 70px;
+        height: 32px;
+        border-radius: 100px;
+        background-color: var(--color-main-darker);
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        position: relative;
+        cursor: pointer;
+
+        transition: 0.2s ease-in-out;
+    }
+    .toggleBall {
+        transition: 0.2s ease-in-out;
+        width: 24px;
+        height: 24px;
+        position: absolute;
+        left: 3px;
+        top: 3px;
+        background-color: #ffffffdc;
+        border-radius: 20px;
+    }
+    .toggleActive {
+        @extend .toggler;
+
+        background-color: var(--color-blue);
+
+        .toggleBall {
+            left: 40px;
+        }
+    }
+}

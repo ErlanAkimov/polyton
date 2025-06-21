@@ -27,6 +27,9 @@ const Homepage: React.FC = () => {
     }, [dispatch, events.length]);
 
     const filteredEvents = useMemo(() => {
+        if (tab === "activity") {
+            return events;
+        }
         return events.filter((a) => a.category.includes(tab));
     }, [events, tab]);
 

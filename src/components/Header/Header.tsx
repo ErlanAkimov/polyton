@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Header.module.scss";
-import { IconClock, IconLogout, IconTon, IconWallet } from "../icons";
+import { IconAdmin, IconClock, IconLogout, IconTon, IconWallet } from "../icons";
 import { useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
 import { toncenter } from "../../api";
 import { fromNano } from "@ton/ton";
 import { AnimatePresence, motion } from "motion/react";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../store/store";
 const Header: React.FC = () => {
     const wallet = useTonWallet();
     const [tc] = useTonConnectUI();
     const [balance, setBalance] = useState<string | null>(null);
     const [menuIsOpen, setMenuIsOpen] = useState<boolean>(false);
     const navigate = useNavigate();
+    const user = useAppSelector((state) => state.user);
 
     useEffect(() => {
         if (!wallet) return;
@@ -44,7 +46,7 @@ const Header: React.FC = () => {
                 className={styles.wrapper}
                 style={{ paddingTop: ["unknown", "tdesktop"].includes(window.Telegram.WebApp.platform) ? 10 : "" }}
             >
-                <h1 onClick={() => handleNavigate('/')}>polyton</h1>
+                <h1 onClick={() => handleNavigate("/")}>polyton</h1>
 
                 <div className={styles.rside}>
                     {wallet && (
@@ -88,6 +90,17 @@ const Header: React.FC = () => {
                             <IconClock />
                             <button>История</button>
                         </motion.div>
+
+                        {user && user.status === 0 && (
+                            <motion.div
+                                className={styles.menuElement}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={() => handleNavigate("/admin")}
+                            >
+                                <IconAdmin />
+                                <button>Admin</button>
+                            </motion.div>
+                        )}
 
                         {wallet ? (
                             <motion.div

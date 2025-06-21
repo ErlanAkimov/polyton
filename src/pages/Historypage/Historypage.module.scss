@@ -1,5 +1,8 @@
 .wrapper {
     padding-inline: var(--padding-inline);
+    height: calc(100vh - 40px);
+    overflow-y: scroll;
+    padding-bottom: 100px;
 }
 
 .pagetitle {
@@ -12,7 +15,7 @@
 .list {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 10px;
     margin-top: 10px;
 }
 
@@ -39,4 +42,114 @@
     width: 100%;
     border-radius: 12px;
     background-color: var(--color-main-darker);
+}
+
+.item {
+    background-color: var(--color-main-darker);
+    border-radius: 12px;
+    box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.2);
+    padding: 12px;
+    border: 1px solid rgba(167, 167, 167, 0.1);
+}
+
+.itemProcess {
+    @extend .item;
+    // border: 1px solid rgba(218, 165, 32, 0.2);
+    // box-shadow: 0 0 5px 3px rgba(218, 165, 32, 0.05);
+}
+
+.inner {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.imgBlock {
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    min-height: 40px;
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: var(--color-main);
+    box-shadow: var(--box-shadow);
+
+    img {
+        border: none;
+        border-radius: 6px;
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.ls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.eventTitle {
+    font-size: 14px;
+    color: white;
+    font-weight: 500;
+}
+
+.yes {
+    content: "Да";
+    height: 20px;
+    width: 40px;
+    margin-top: 2px;
+    background-color: rgba(65, 243, 65, 0.479);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.678);
+}
+
+.no {
+    @extend .yes;
+    background-color: rgba(184, 83, 83, 0.774);
+}
+
+.rside {
+    .date {
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.3);
+    }
+
+    .ton {
+        margin-top: 4px;
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        color: white;
+        gap: 4px;
+        font-weight: 600;
+        justify-content: flex-end;
+    }
+}
+
+.result {
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(97, 97, 97, 0.3);
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    span {
+        color: green;
+        font-weight: 500;
+    }
 }

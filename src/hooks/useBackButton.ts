@@ -8,10 +8,14 @@ export default async function useBackButton() {
         const bb = window.Telegram.WebApp.BackButton;
 
         bb.isVisible = true;
-        bb.onClick(() => navigate(-1));
+        const getBack = () => {
+            navigate(-1);
+        };
+        bb.onClick(getBack);
 
         return () => {
             bb.isVisible = false;
+            bb.offClick(getBack);
         };
     }, []);
 }

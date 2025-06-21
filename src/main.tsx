@@ -10,9 +10,9 @@ const wa = window.Telegram.WebApp;
 const isDesktop = ["tdesktop", "unknown"].includes(wa.platform);
 
 if (!isDesktop) {
-    // wa.requestFullscreen();
+    wa.requestFullscreen();
     wa.disableVerticalSwipes();
-    // wa.expand();
+    wa.expand();
 }
 wa.setHeaderColor("#171717");
 

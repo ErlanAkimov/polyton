@@ -32,8 +32,8 @@ const Eventpage: React.FC = () => {
             wa.showAlert("Событие не найдено, попробуйте обновить страницу");
             return;
         }
-        if (!amount) {
-            wa.showAlert("Введите ссуму для голосования (min 0.5 TON)");
+        if (!amount || Number(amount) < 1) {
+            wa.showAlert("Введите целое число для голосования, например 3 или 5 (min 1 TON)");
             return;
         }
 
@@ -88,9 +88,9 @@ const Eventpage: React.FC = () => {
 
     const handleStepValue = (v: string) => {
         if (v === "+") {
-            setAmount((prev) => (Number(prev) + 0.5).toString());
+            setAmount((prev) => (Number(prev) + 1).toString());
         } else {
-            const result = Number(amount) - 0.5 < 0 ? "0" : (Number(amount) - 0.5).toFixed(2);
+            const result = Number(amount) - 1 <= 0 ? "0" : (Number(amount) - 1).toFixed(0);
             setAmount(result);
         }
     };
@@ -160,7 +160,7 @@ const Eventpage: React.FC = () => {
                     </div>
 
                     <div className={styles.inputBlock}>
-                        <input placeholder="0.5 min" value={amount} onChange={handleChangeInput} type="text" />
+                        <input placeholder="1 min" value={amount} onChange={handleChangeInput} type="text" />
                         <motion.button onClick={() => handleStepValue("+")} whileTap={{ scale: 0.92 }}>
                             +
                         </motion.button>

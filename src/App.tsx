@@ -13,11 +13,11 @@ import Pendingpage from "./pages/Pendingpage/Pendingpage";
 import Anketapage from "./pages/Anketapage/Anketapage";
 import { authApi } from "./api";
 import Historypage from "./pages/Historypage/Historypage";
+import AdminCreatepage from "./pages/AdminCreatepage/AdminCreatepage";
 
 const App: React.FC = () => {
     useUserAuth();
     useWallet();
-
 
     useEffect(() => {
         const wa = window.Telegram.WebApp;
@@ -27,7 +27,9 @@ const App: React.FC = () => {
                 const eventId = res.button_id.split(":")[1];
 
                 authApi.post("/shareEvent", { eventId, id: wa.initDataUnsafe.user.id }).then((res) => {
-                    wa.shareMessage(res.data.id, (a) => {console.log(a)} )
+                    wa.shareMessage(res.data.id, (a) => {
+                        console.log(a);
+                    });
                 });
             }
         }
@@ -42,11 +44,12 @@ const App: React.FC = () => {
             <Routes>
                 <Route path="/" element={<Homepage />} />
                 <Route path="/event/:eventId" element={<Eventpage />} />
-                <Route path="/admin-panel" element={<Adminpage />} />
                 <Route path="/pending" element={<Pendingpage />} />
                 <Route path="/anketa" element={<Anketapage />} />
                 <Route path="/history" element={<Historypage />} />
-                
+
+                <Route path="/admin" element={<Adminpage />} />
+                <Route path="/admin/create-event" element={<AdminCreatepage />} />
             </Routes>
         </div>
     );

@@ -9,17 +9,17 @@ interface Props {
 const SectionTabs: React.FC<Props> = ({ tab, onPickTab }) => {
     return (
         <div className={styles.tabwrapper}>
-            <button onClick={() => onPickTab("token")} className={tab === "token" ? styles.pickedTab : styles.tab}>
-                TOKENS
+            <button onClick={() => onPickTab("activity")} className={tab === "activity" ? styles.pickedTab : styles.tab}>
+                Activity
             </button>
-            <button onClick={() => onPickTab("gift")} className={tab === "gift" ? styles.pickedTab : styles.tab}>
-                GIFTS
+            <button onClick={() => onPickTab("token")} className={tab === "token" ? styles.pickedTab : styles.tab}>
+                TOKEN
             </button>
             <button
-                onClick={() => onPickTab("activity")}
-                className={tab === "activity" ? styles.pickedTab : styles.tab}
+                onClick={() => onPickTab("gift")}
+                className={tab === "gift" ? styles.pickedTab : styles.tab}
             >
-                Activity
+                GIFT
             </button>
             {tab !== "event" && (
                 <button onClick={() => onPickTab("event")} className={styles.createEvent}>
