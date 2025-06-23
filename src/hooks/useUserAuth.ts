@@ -24,6 +24,10 @@ export default function () {
         authApi
             .post("/", { ref })
             .then((res) => {
+                if (!res.data.user.allows_write_to_pm) {
+                    window.Telegram.WebApp.requestWriteAccess();
+                }
+
                 if (res.data.user.status === 2) {
                     navigate("/anketa");
                     return;
